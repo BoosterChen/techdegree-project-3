@@ -24,7 +24,7 @@ function initForm(){
             options.forEach( element => element.style.display = "");
         } else {
             const selectTheme = themeContent.match(/Theme - (.*)/)[1];
-            options.forEach( element => element.textContent.indexOf(selectTheme) >= 0 ? element.style.display="" : element.style.display="none");
+            Array.prototype.forEach.call(options, element => element.textContent.indexOf(selectTheme) >= 0 ? element.style.display = "" : element.style.display = "none");
         }
     })
 
