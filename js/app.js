@@ -16,17 +16,34 @@ function initForm(){
     });
 
     // init T-shirt Info section
-    form.querySelector("#design").addEventListener("change", e => {
+    function showThemeColor(theme){
         const options = form.querySelectorAll("#color option");
-        const themeContent = e.target.querySelector("option:checked").textContent;
-
-        if(themeContent === "Select Theme"){
+        if(theme === "Select Theme"){
             options.forEach( element => element.style.display = "");
         } else {
-            const selectTheme = themeContent.match(/Theme - (.*)/)[1];
-            Array.prototype.forEach.call(options, element => element.textContent.indexOf(selectTheme) >= 0 ? element.style.display = "" : element.style.display = "none");
+            const selectTheme = theme.match(/Theme - (.*)/)[1];
+            let first = true;
+            options.forEach(element => {
+                if(element.textContent.indexOf(selectTheme) >= 0){
+                    element.style.display = "";
+                    if(first){
+                        first = false;
+                        element.selected = true;
+                    }
+                } else {
+                    element.style.display = "none";
+                }
+
+            });
         }
+    }
+    form.querySelector("#design").addEventListener("change", e => {
+        showThemeColor( e.target.querySelector("option:checked").textContent )
     });
+    form.querySelector("#design option").disabled = true;
+    form.querySelector("#design option[value='js puns']").selected = true;
+    showThemeColor(form.querySelector("#design option[value='js puns']").textContent);
+
 
     // init register
     form.querySelector(".activities").addEventListener("change", e => {
@@ -66,7 +83,40 @@ function initForm(){
             form.querySelector("#totalPrice").textContent = "Total: $" + priceCount;
             form.querySelector("#totalPrice").hidden = false;
         }
+    });
+
+    // init payment info
+    function showPaymentArea(paymentType){
+        const paymentDivArray = Array.prototype.slice.call(form.querySelectorAll("#payments > div"));
+        paymentDivArray.forEach(element => element.className === paymentType ? element.style.display = "" : element.style.display = "none");
+    }
+    form.querySelector("#payment option[value='select_method']").disabled = true;
+    form.querySelector("#payment option[value='credit-card']").selected = true;
+    showPaymentArea("credit-card");
+    form.querySelector("#payment").addEventListener("change", e => showPaymentArea(e.target.value));
+
+    const formValidator = {
+        createErrorMessage: (elemnent, eMsg) => {
+
+        },
+        all: () => {
+
+        },
+        name : () =>{
+            form.querySelector("#name").value === ""
+        }
+    };
+
+    // form validation
+    form.addEventListener("submit", e =>{
+        let errorMessage = "";
+
     })
+
+
+
+
+
 
 
 
