@@ -147,6 +147,15 @@ button:hover {
 	display: none;
 }
 
+.error {
+	margin: 0 0 2em 0;
+	color: crimson;
+}
+
+.error-label {
+	color: crimson;
+}
+
 .clearfix::after {
   content: " ";
   display: table;

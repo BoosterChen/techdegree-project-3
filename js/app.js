@@ -1,8 +1,84 @@
+!function (formValidator) {
+    let nameValid = true,
+        emailValid = true,
+        titleValid = true,
+        shirtValid = true,
+        activitiesValid = true,
+        paymentsValid = true;
+
+    function showError(eleType, errorMsg){
+        const eleLabal = document.querySelector(`label[data-labelFor=${eleType}]`) || document.querySelector(`legend[data-labelFor=${eleType}]`);
+        const eleError = document.querySelector(`p[data-errorFor=${eleType}]`);
+        eleLabal.className = "error-label";
+        eleError.textContent = errorMsg;
+        eleError.style.display = "";
+    }
+
+    function hideError(eleType){
+        const eleLabal = document.querySelector(`label[data-labelFor=${eleType}]`) || document.querySelector(`legend[data-labelFor=${eleType}]`);
+        const eleError = document.querySelector(`p[data-errorFor=${eleType}]`);
+        eleLabal.className = "";
+        eleError.style.display = "none";
+        eleError.textContent = "";
+    }
+
+    function validAll(){
+        let validResult = validName();
+        validResult = formValidator.email() && validResult;
+
+
+        return  validResult;
+    }
+
+    function validName() {
+        if (document.querySelector("#name").value === "") {
+            if(nameValid){
+                nameValid = false;
+                showError("name", "Please enter your name!");
+            }
+            return false;
+        } else {
+            if(!nameValid){
+                nameValid = true;
+                hideError("name");
+            }
+            return true;
+        }
+    }
+
+    function validEmail() {
+        const emailExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        if(document.querySelector("#email").value.test(emailExp)){
+            if(emailValid){
+                emailValid = false;
+                showError("email", "Please enter your name!");
+            }
+            return false;
+        } else {
+            if(!emailValid){
+                emailValid = true;
+                hideError("email");
+            }
+            return true;
+        }
+    }
+
+
+    window.formValidator = {
+        all: validAll,
+        name: validName,
+        email: validEmail
+    };    //export the validator
+}();
+
+
 // init the form
 function initForm(){
     const form = document.querySelector("form");
 
     form.querySelector("input[type=text]").focus();   //focus to the first text field
+    form.querySelector("input[type=text]").addEventListener("change", formValidator.name);
+
 
     // init Job Role section
     const otherTitleInput =  form.querySelector("#other-title");
@@ -95,31 +171,12 @@ function initForm(){
     showPaymentArea("credit-card");
     form.querySelector("#payment").addEventListener("change", e => showPaymentArea(e.target.value));
 
-    const formValidator = {
-        createErrorMessage: (elemnent, eMsg) => {
 
-        },
-        all: () => {
-
-        },
-        name : () =>{
-            form.querySelector("#name").value === ""
-        }
-    };
 
     // form validation
     form.addEventListener("submit", e =>{
-        let errorMessage = "";
-
+        e.preventDefault();
     })
-
-
-
-
-
-
-
-
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {
