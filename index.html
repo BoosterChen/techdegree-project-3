@@ -106,22 +106,25 @@
         </select>
 
         <div id="credit-card" class="credit-card">
-
+          <div class="clearfix">
           <div class="col-6 col">
-            <label for="cc-num">Card Number:</label>
+              <label for="cc-num" data-labelFor="cc-num">Card Number:</label>
         	  <input id="cc-num" name="user_cc-num" type="text">
+              <p class="error" data-errorFor="cc-num" hidden></p>
           </div>
 
           <div class="col-3 col">
-            <label for="zip">Zip Code:</label>
-            <input id="zip" name="user_zip" type="text"> 
+            <label for="zip" data-labelFor="zip">Zip Code:</label>
+            <input id="zip" name="user_zip" type="text">
+            <p class="error" data-errorFor="zip" hidden></p>
           </div>
 
           <div class="col-3 col">
-            <label for="cvv">CVV:</label>
-            <input id="cvv" name="user_cvv" type="text"> 
+            <label for="cvv" data-labelFor="cvv">CVV:</label>
+            <input id="cvv" name="user_cvv" type="text">
+            <p class="error" data-errorFor="cvv" hidden></p>
           </div>
-
+          </div>
           <label for="exp-month">Expiration Date:</label>
           <select id="exp-month" name="user_exp-month">
             <option value="1">1 - January</option>
@@ -157,7 +160,7 @@
         <p class="error" data-errorFor="payments" hidden></p>
       </fieldset>
 
-      <button type="submit">Register</button>
+      <button type="">Register</button>
       
     </form>
 
